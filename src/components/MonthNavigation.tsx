@@ -5,16 +5,15 @@ import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { Card } from "./ui/card";
 
 interface MonthNavigationProps {
-  currentYear: number;
-  currentMonth: number;
-  onMonthChange: (year: number, month: number) => void;
+  currentDate: { year: number; month: number };
+  onDateChange: (date: { year: number; month: number }) => void;
 }
 
 export function MonthNavigation({ 
-  currentYear, 
-  currentMonth, 
-  onMonthChange
+  currentDate, 
+  onDateChange
 }: MonthNavigationProps) {
+  const { year: currentYear, month: currentMonth } = currentDate;
   const [showYearMonthSelect, setShowYearMonthSelect] = useState(false);
 
   const monthNames = [
@@ -24,17 +23,17 @@ export function MonthNavigation({
 
   const goToPreviousMonth = () => {
     if (currentMonth === 1) {
-      onMonthChange(currentYear - 1, 12);
+      onDateChange({ year: currentYear - 1, month: 12 });
     } else {
-      onMonthChange(currentYear, currentMonth - 1);
+      onDateChange({ year: currentYear, month: currentMonth - 1 });
     }
   };
 
   const goToNextMonth = () => {
     if (currentMonth === 12) {
-      onMonthChange(currentYear + 1, 1);
+      onDateChange({ year: currentYear + 1, month: 1 });
     } else {
-      onMonthChange(currentYear, currentMonth + 1);
+      onDateChange({ year: currentYear, month: currentMonth + 1 });
     }
   };
 
@@ -85,7 +84,7 @@ export function MonthNavigation({
               <label className="block text-sm text-gray-600 mb-2">年</label>
               <Select 
                 value={currentYear.toString()} 
-                onValueChange={(value) => onMonthChange(parseInt(value), currentMonth)}
+                onValueChange={(value) => onDateChange({ year: parseInt(value), month: currentMonth })}
               >
                 <SelectTrigger className="w-32 rounded-lg bg-white">
                   <SelectValue />
@@ -101,7 +100,7 @@ export function MonthNavigation({
               <label className="block text-sm text-gray-600 mb-2">月</label>
               <Select 
                 value={currentMonth.toString()} 
-                onValueChange={(value) => onMonthChange(currentYear, parseInt(value))}
+                onValueChange={(value) => onDateChange({ year: currentYear, month: parseInt(value) })}
               >
                 <SelectTrigger className="w-32 rounded-lg bg-white">
                   <SelectValue />

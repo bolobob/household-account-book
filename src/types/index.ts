@@ -1,4 +1,5 @@
 export * from './database.types'
+import { Expense, Budget } from './database.types'
 
 // 追加の型定義
 export interface MonthlyData {
